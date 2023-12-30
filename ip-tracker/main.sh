@@ -24,7 +24,9 @@ if [ -f ${path_to_ip} ]; then
 	previous_ip=$(cat $path_to_ip)
 
 	if [ "$public_ip" != "$previous_ip" ]; then
+		source update_ip.sh
 
+		update_dns_record
 	else
 		echo "No change in IP. IP is $public_ip"
 	fi
