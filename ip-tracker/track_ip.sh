@@ -10,7 +10,7 @@ track_ip() {
 
 	echo "Initializing check for record $record_name and domain $domain."
 
-	current_ip=$(get_dns_ip "$1" "$2")
+	current_ip=$(get_dns_ip "$domain" "$record_name")
 
 	echo "Got $current_ip as IP in GoDaddy."
 
@@ -20,7 +20,7 @@ track_ip() {
 
 	if [[ "$current_ip" != "ERROR" && "$current_ip" != "" ]]; then
 		if [ "$new_ip" != "$current_ip" ]; then
-			status=$(update_dns_ip "jatinrmehta.com" "opphub" "$new_ip")
+			status=$(update_dns_ip "$domain" "$record_name" "$new_ip")
 			if [ "$status" == "200" ]; then
 				echo "SUCCESS. Updated IP from $current_ip to $new_ip"
 			else

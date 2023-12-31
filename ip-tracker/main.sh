@@ -4,6 +4,7 @@
 # also must end with empty line!
 domains_file="domains_config.txt"
 
+cd $(dirname "${BASH_SOURCE[0]}")
 source track_ip.sh
 
 # iteratively calls the track_ip function for all domains
