@@ -1,39 +1,14 @@
 #!/usr/bin/env bash
 
-OUTPUT_DIR="/var/log/jatin/ip-tracker"
+# this text file should have each line in format of: "<domain> <record_name>"
+# also must end with empty line!
+domains_file="domains_config.txt"
 
-date_year=$(date +"%Y")
-date_month=$(date +"%m")
-date_day_time=$(date +"%d-%T")
-public_ip=$(curl -4 icanhazip.com 2>/dev/null)
+source track_ip.sh
 
-# store as log
-path_to_log_folder="$OUTPUT_DIR/data/$date_year/$date_month"
-
-if [ ! -d ${path_to_log_folder} ]; then
-	mkdir -p ${path_to_log_folder}
-fi
-
-echo "$public_ip" >"$path_to_log_folder/$date_day_time.log"
-
-# compare with currently stored ip
-path_to_ip="$OUTPUT_DIR/current_ip.txt"
-
-if [ -f ${path_to_ip} ]; then
-
-	previous_ip=$(cat $path_to_ip)
-
-	if [ "$public_ip" != "$previous_ip" ]; then
-		source update_ip.sh
-
-		update_dns_record
-	else
-		echo "No change in IP. IP is $public_ip"
-	fi
-else
-	echo "$public_ip" >"$path_to_ip"
-fi
-
-function function_name {
-	commands
-}
+# iteratively calls the track_ip function for all domains
+while read line; do
+    domain=$(echo "$line" | cut -d ' ' -f 1)
+    record_name=$(echo "$line" | cut -d ' ' -f 2)
+    track_ip_main $domain $record_name
+done <"$domains_file"
