@@ -12,11 +12,11 @@ track_ip() {
 
 	current_ip=$(get_dns_ip "$domain" "$record_name")
 
-	echo "Got $current_ip as IP in GoDaddy."
+	# echo "Got $current_ip as IP in GoDaddy."
 
 	new_ip=$(curl --silent -6 icanhazip.com)
 
-	echo "Got $new_ip as IP for machine."
+	# echo "Got $new_ip as IP for machine."
 
 	if [[ "$current_ip" != "ERROR" && "$current_ip" != "" ]]; then
 		if [ "$new_ip" != "$current_ip" ]; then
