@@ -2,6 +2,7 @@
 
 # this text file should have each line in format of: "<domain> <record_name>"
 # also must end with empty line!
+# WARNING - this must point to the file with records to update and must be in the same folder as main.sh
 domains_file="domains_config.txt"
 
 cd $(dirname "${BASH_SOURCE[0]}")

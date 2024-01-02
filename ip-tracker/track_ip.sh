@@ -14,7 +14,7 @@ track_ip() {
 
 	# echo "Got $current_ip as IP in GoDaddy."
 
-	new_ip=$(curl --silent -6 icanhazip.com)
+	new_ip=$(curl --silent -4 icanhazip.com)
 
 	# echo "Got $new_ip as IP for machine."
 
