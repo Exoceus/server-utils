@@ -9,6 +9,10 @@ const {execute} = require("./helpers/execute.js");
 const PORT = process.env.PORT;
 const app = express();
 
+if (!PORT){
+    throw `Port is currently '${PORT}'. Please add port number in env file`
+}
+
 app.get("/", async (req, res) => {
     const machineName = await execute("hostname");
     res.json({machine: machineName, cpu: await getCpuInfo(), memory: await getMemInfo(), disk: await getDiskInfo()});
